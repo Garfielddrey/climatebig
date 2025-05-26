@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Change Quiz</title>
+    <link rel="stylesheet" href="quiz.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <a href="index.html" class="home-button">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+        <!-- <a href="index.html" class="home-button"> -->
+    <!-- <span class="arrow-icon">←</span> Back to Home -->
+</a>
+        
+        <h1>Climate Change Knowledge Quiz</h1>
+
+<body>
+    <div class="quiz-container">
+        <h1>Climate Change Knowledge Quiz</h1>
+        <p>Test your understanding of climate change with this interactive quiz.</p>
+        
+        <div class="quiz-intro">
+            <p>This quiz contains 10 questions about climate science, impacts, and solutions. You'll get immediate feedback after each question.</p>
+            <button id="start-btn" class="btn">Start Quiz</button>
+        </div>
+        
+        <div id="quiz" class="quiz hidden">
+            <div id="question-container">
+                <div id="question" class="question"></div>
+                <div id="answer-buttons" class="answer-buttons"></div>
+            </div>
+            <div id="feedback" class="feedback hidden"></div>
+            <button id="next-btn" class="btn hidden">Next Question</button>
+        </div>
+        
+        <div id="results" class="results hidden">
+            <h2>Quiz Results</h2>
+            <p id="score-text"></p>
+            <p id="result-message"></p>
+            <button id="restart-btn" class="btn">Take Quiz Again</button>
+        </div>
+    </div>
+    
+    <script src="java.js"></script>
+</body>
+</html>

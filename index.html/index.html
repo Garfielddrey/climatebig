@@ -1,0 +1,977 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>GreenAlliance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Loading Animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0ee123;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #fff;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Header Animation */
+        .header {
+            min-height: 100vh;
+            width: 100%;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(flood.jpg);
+            background-position: center;
+            background-size: cover;
+            position: relative;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .disturb {
+            background-color: #000000a8;
+            border: 1px solid white;
+            width: min(700px, 90%);
+            height: auto;
+            min-height: 300px;
+            border-radius: 20px;
+            padding: 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        nav {
+            display: flex;
+            padding: 2% 6%;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        nav.scrolled {
+            padding: 1% 6%;
+            background-color: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        nav img {
+            width: 150px;
+            max-width: 100%;
+            height: auto;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled img {
+            width: 120px;
+        }
+
+        .nav-links {
+            flex: 1;
+            text-align: right;
+        }
+
+        .nav-links ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links ul li {
+            list-style: none;
+            display: inline-block;
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        .nav-links ul li a {
+            color: antiquewhite;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #0ee123;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links ul li a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links ul li a:hover {
+            color: #0ee123;
+        }
+
+        .text-box {
+            width: 90%;
+            color: #fff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .text-box h1 {
+            font-size: clamp(32px, 8vw, 62px);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .text-box p {
+            margin: 10px 0 40px;
+            font-size: clamp(12px, 2.5vw, 14px);
+            color: #fff;
+            line-height: 1.5;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            border: 1px solid #10d724ef;
+            border-radius: 35px;
+            padding: 12px 34px;
+            font-size: 13px;
+            background: transparent;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(14, 225, 35, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .hero-btn:hover::before {
+            left: 100%;
+        }
+
+        .hero-btn:hover {
+            border: 1px solid #0ee123;
+            background: #0ee123;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(14, 225, 35, 0.3);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .menu-toggle:hover {
+            color: #0ee123;
+            transform: rotate(90deg);
+        }
+
+        /* Sections Animation */
+        section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .courses {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 5vw, 36px);
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 25%;
+            background-color: #0ee123;
+            border-radius: 3px;
+        }
+
+        p {
+            color: #151515;
+            font-size: clamp(12px, 2.5vw, 14px);
+            font-weight: 300;
+            line-height: 1.6;
+            padding: 10px;
+        }
+
+        .row {
+            margin-top: 5%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .course-col {
+            flex: 1;
+            min-width: 280px;
+            background: #fff;
+            border-radius: 10px;
+            margin-bottom: 5%;
+            padding: 30px 20px;
+            box-sizing: border-box;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-col::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #0ee123, #10d724ef);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .course-col:hover::before {
+            transform: scaleX(1);
+        }
+
+        h3 {
+            text-align: center;
+            font-weight: 600;
+            margin: 10px 0;
+            font-size: clamp(16px, 3vw, 20px);
+            color: #333;
+        }
+
+        .course-col p {
+            color: #555;
+        }
+
+        .course-col:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px);
+        }
+
+        .campus {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .campus-col {
+            flex-basis: 22%;
+            min-width: 250px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .campus-col img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: all 0.5s ease;
+        }
+
+        .layer {
+            background: transparent;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .layer:hover {
+            background: rgba(9, 224, 85, 0.7);
+        }
+
+        .layer h3 {
+            color: #fff;
+            font-size: 24px;
+            opacity: 0;
+            transition: 0.5s;
+            text-align: center;
+            transform: translateY(20px);
+        }
+
+        .layer p {
+            color: #fff;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease 0.1s;
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .layer:hover h3,
+        .layer:hover p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .campus-col:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: #fff;
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: #0ee123;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-section p, 
+        .footer-section a {
+            color: #bbb;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #0ee123;
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            background-color: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: #0ee123;
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: #0ee123;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #10d724ef;
+            transform: translateY(-5px);
+        }
+
+        /* Tablet Styles */
+        @media(max-width: 1024px) {
+            nav {
+                padding: 3% 4%;
+            }
+            
+            .courses {
+                padding: 80px 15px;
+            }
+            
+            .row {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .course-col {
+                max-width: 500px;
+                width: 100%;
+            }
+            
+            .campus-col {
+                flex-basis: 45%;
+                min-width: 300px;
+            }
+        }
+
+    
+        @media(max-width: 768px) {
+            nav {
+                padding: 4% 3%;
+            }
+            
+            nav img {
+                width: 120px;
+            }
+            
+            .text-box {
+                width: 95%;
+                padding: 15px;
+            }
+            
+            .text-box h1 {
+                margin-bottom: 15px;
+            }
+            
+            .text-box p {
+                margin: 10px 0 30px;
+            }
+            
+            .hero-btn {
+                padding: 10px 25px;
+                font-size: 12px;
+            }
+            
+            .courses, .campus {
+                padding: 60px 10px;
+            }
+            
+            .course-col {
+                min-width: unset;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .campus {
+                padding: 60px 10px;
+            }
+            
+            .campus-col {
+                min-width: unset;
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto 20px;
+            }
+
+            .footer-section {
+                flex: 100%;
+                text-align: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
+        
+        @media(max-width: 480px) {
+            nav {
+                padding: 3% 2%;
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 0;
+            }
+            
+            nav img {
+                width: 100px;
+            }
+            
+            .nav-links ul li {
+                padding: 6px 8px;
+            }
+            
+            .nav-links ul li a {
+                font-size: 12px;
+            }
+            
+            .text-box {
+                padding: 10px;
+            }
+            
+            .hero-btn {
+                padding: 8px 20px;
+                font-size: 11px;
+            }
+            
+            .disturb {
+                width: 95%;
+                padding: 15px;
+                min-height: 250px;
+            }
+            
+            .courses, .campus {
+                padding: 50px 5px;
+            }
+            
+            .course-col, .campus-col {
+                padding: 20px 15px;
+            }
+        }
+
+        /* Mobile Navigation Menu */
+        @media(max-width: 700px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links ul li {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+                height: 100vh;
+                width: 70%;
+                max-width: 300px;
+                top: 0;
+                right: -100%;
+                text-align: left;
+                z-index: 999;
+                transition: right 0.4s ease;
+                padding-top: 80px;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links ul {
+                padding: 20px;
+            }
+            
+            .nav-links ul li {
+                margin: 25px 0;
+                padding: 10px;
+                opacity: 0;
+                transform: translateX(20px);
+                transition: all 0.4s ease;
+            }
+
+            .nav-links.active ul li {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .nav-links.active ul li:nth-child(1) { transition-delay: 0.1s; }
+            .nav-links.active ul li:nth-child(2) { transition-delay: 0.2s; }
+            .nav-links.active ul li:nth-child(3) { transition-delay: 0.3s; }
+            .nav-links.active ul li:nth-child(4) { transition-delay: 0.4s; }
+            
+            .nav-links ul li a {
+                font-size: 18px;
+                color: #fff;
+                font-weight: 500;
+            }
+            
+            .nav-links ul li::after {
+                background: #0ee123;
+            }
+            
+            /* Close button inside mobile menu */
+            .nav-links::before {
+                content: "✕";
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                color: #fff;
+                font-size: 24px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links::before:hover {
+                color: #0ee123;
+                transform: rotate(90deg);
+            }
+        }
+
+        /* Ensure images are responsive */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Utility classes for better responsive design */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        @media(max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+        }
+
+        @media(max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <span class="loader"></span>
+    </div>
+
+    <section class="header">
+        <nav id="navbar">
+            <a href="index.html"><img src="green.jpg" alt="GreenAlliance Logo"></a>
+            <div class="nav-links" id="navLinks">
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="learn.html">Learn</a></li>
+                    <li><a href="media.html">Media</a></li>
+                    <li><a href="quiz.html">Quiz</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="text-box">
+            <div class="disturb">
+                <h1>Climate Change</h1>
+                <p>Climate change refers to long-term shifts in temperatures and weather patterns, primarily caused by human activities—especially the burning of fossil fuels like coal, oil, and gas. These activities release greenhouse gases such as carbon dioxide (CO₂) and methane into the atmosphere, which trap heat and cause the Earth's average temperature to rise.</p>
+                <a href="Learn.html"><span class="hero-btn">Visit us to know more</span></a>
+            </div>
+        </div>
+    </section>
+     
+    <section class="course">
+        <h1>Reasons why you should join us</h1>
+        <p>Be part of a community that's not just talking about climate change — we're taking real action. From local cleanups to global campaigns, your involvement creates measurable change.</p>
+        <div class="row">
+            <div class="course-col">
+                <h3>Make a Real Impact</h3>
+                <p>Be part of a community that's not just talking about climate change — we're taking real action. From local cleanups to global campaigns, your involvement creates measurable change.</p>
+            </div>
+
+            <div class="course-col">
+                <h3>Join a Movement with momentum</h3>
+                <p>We highlight and celebrate community contributions. Whether you're planting trees, organizing an event, or writing a blog post — your actions get noticed.</p>
+            </div>
+
+            <div class="course-col">
+                <h3>Be recognized for your efforts</h3>
+                <p>We highlight and celebrate community contributions. Whether you're planting trees, organizing an event, or writing a blog post — your actions get noticed.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="campus">
+        <h1>Help us save the community</h1>
+        <p>By joining, you're directly contributing to SDG 13 — taking urgent action to combat climate change and its impacts. Whether it's advocacy, education, or innovation, you'll be part of the global solution.</p>
+        <div class="row">
+            <div class="campus-col">
+                <img src="deforestation.jpg" alt="Deforestation">
+                <div class="layer">
+                    <h3>Deforestation</h3>
+                    <p>Learn how deforestation contributes to climate change</p>
+                </div>
+            </div>
+            <div class="campus-col">
+                <img src="flood.jpg" alt="Rising sea levels">
+                <div class="layer">
+                    <h3>Rising sea levels</h3>
+                    <p>Understand the impact of melting ice caps</p>
+                </div>
+            </div>
+            <div class="campus-col">
+                <img src="extreme.jpg" alt="Extreme Weather">
+                <div class="layer">
+                    <h3>Extreme Weather</h3>
+                    <p>See how climate change affects weather patterns</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>GreenAlliance is a global movement dedicated to combating climate change through education, activism, and sustainable solutions.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="learn.html">Learn</a>
+                <a href="media.html">Media</a>
+                <a href="quiz.html">Quiz</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><a href="https://green-alliance.org.uk/wp-content/uploads/2024/03/Head-of-climate-policy_job-pack.pdf">info@greenalliance.org</a></p>
+                <p></p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/yourpage"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/yourusername"><i class="fab fa-twitter"></i></a>
+        
+                    <a href="https://www.linkedin.com/in/yourusername"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 GreenAlliance. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Loading screen animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading-screen').classList.add('fade-out');
+            }, 1500);
+        });
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animation for sections
+        const sections = document.querySelectorAll('section');
+        
+        function checkScroll() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight - 100) {
+                    section.classList.add('show');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('active');
+            } else {
+                backToTopButton.classList.remove('active');
+            }
+        });
+
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Add hover effect to all buttons
+        const buttons = document.querySelectorAll('.hero-btn, .back-to-top, .social-icons a');
+        
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.2)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

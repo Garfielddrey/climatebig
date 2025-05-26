@@ -1,0 +1,253 @@
+.home-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+}
+
+.home-button:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+    transform: translateX(-3px);
+}
+
+.home-button i {
+    font-size: 0.9rem;
+}
+
+/* Responsive adjustments for home button */
+@media (max-width: 480px) {
+    .home-button {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+    }
+}
+.home-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+}
+
+.arrow-icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+
+
+
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --correct-color: #28a745;
+    --incorrect-color: #dc3545;
+    --light-bg: #f5f7fa;
+    --white: #ffffff;
+    --text-color: #333;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.quiz-container {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.quiz-intro {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.quiz-intro p {
+    margin-bottom: 20px;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.btn {
+    background: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    transition: all 0.3s ease;
+    width: auto;
+    display: inline-block;
+    margin: 5px;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.quiz {
+    margin-top: 20px;
+}
+
+.question {
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    line-height: 1.4;
+}
+
+.answer-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.answer-btn {
+    background: #ecf0f1;
+    border: 1px solid #bdc3c7;
+    border-radius: var(--border-radius);
+    padding: 12px 15px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    word-break: break-word;
+}
+
+.answer-btn:hover:not([disabled]) {
+    background: #d6eaf8;
+    border-color: var(--secondary-color);
+}
+
+.answer-btn[disabled] {
+    cursor: not-allowed;
+}
+
+.feedback {
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    display: none;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    line-height: 1.5;
+}
+
+.correct {
+    background: #d4edda;
+    color: #155724;
+    border-left: 5px solid var(--correct-color);
+}
+
+.incorrect {
+    background: #f8d7da;
+    color: #721c24;
+    border-left: 5px solid var(--incorrect-color);
+}
+
+.results {
+    text-align: center;
+    padding: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+#score-text {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+#result-message {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .quiz-container {
+        padding: 20px;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        width: 100%;
+        margin: 5px 0;
+    }
+    
+    .answer-btn {
+        padding: 10px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .quiz-container {
+        padding: 15px;
+    }
+    
+    .feedback {
+        padding: 12px;
+    }
+    
+    #next-btn {
+        width: 100%;
+    }
+}
+
+/* Animation for better UX */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.question, .answer-buttons, .feedback, .results {
+    animation: fadeIn 0.5s ease forwards;
+}
