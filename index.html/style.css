@@ -13,8 +13,7 @@
     min-height: 300px;
     border-radius: 20px;
     padding: 20px;
- display: flex;
-       justify-content: center;
+
 }
 
 .header{
@@ -83,11 +82,12 @@ nav img{
     position: absolute;
     top: 50%;
     left: 50%;
+        display: flex;
+    justify-content: center;
     transform: translate(-50%, -50%);
     text-align: center;
     padding: 20px;
-        display: flex;
-    justify-content: center;
+    
 }
 
 .text-box h1{
